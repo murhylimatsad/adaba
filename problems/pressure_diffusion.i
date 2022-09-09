@@ -24,6 +24,7 @@
      type = DarcyPressure # ADDiffusion # Laplacian opeartor
      variable = pressure # Operate on the pressure variable from above
      permeability = 0.8451e-09 # # (m^s) assumed permeability of the porous medium
+     viscosity = 0
   []
 []
 
