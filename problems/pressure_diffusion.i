@@ -19,12 +19,36 @@
   []
 []
 
+[AuxVariables]
+  [velocity]
+    order = CONSTANT # Since "pressure" is approximated linearly, its gradient must be constant
+    family = MONOMIAL_VEC # A monomial interpolation means this is an elemental AuxVariable
+  []
+[]
+
+[AuxKernels]
+  [velocity]
+    type = DarcyVelocity
+    variable = velocity # Store volumetric flux vector in "velocity" variable from above
+    pressure = pressure # Couple to the "pressure" variable from above
+    execute_on = TIMESTEP_END # Perform calculation at the end of the solve step - after Kernels run
+  []
+[]
+[Materials]
+  [filter]
+    type = PackedColumn
+    diameter = 2
+    viscosity = 1e-03
+    # output_properties = 'permeability viscosity'
+    # outputs = exodus
+  []
+[]
 [Kernels]
   [diffusion]
      type = DarcyPressure # ADDiffusion # Laplacian opeartor
      variable = pressure # Operate on the pressure variable from above
-     permeability = 0.8451e-09 # # (m^s) assumed permeability of the porous medium
-     viscosity = 0
+     # permeability = 0.8451e-09 # # (m^s) assumed permeability of the porous medium
+     # viscosity = 7.98e-04
   []
 []
 
